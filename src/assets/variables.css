@@ -1,0 +1,23 @@
+:root {
+  --color-primary: #EB5D3E;
+  --color-bg: #131313;
+  --color-card: #1D1D1D;
+  --color-text: #F7F7F7;
+  --color-muted: #707070;
+  --color-invalid: #FF2E00;
+
+  --radius-main: 24px;
+
+  --font-main: 'Inter', sans-serif;
+  --font-title: 'Marmelad', serif;
+
+  --font-size-big: 24px;
+  --font-size-normal: 16px;
+  --font-size-small: 12px;
+
+  --gap-xxxl: 64px;
+  --gap-xxl: 32px;
+  --gap-xl: 24px;
+  --gap-m: 16px;
+  --gap-s: 8px;
+}
