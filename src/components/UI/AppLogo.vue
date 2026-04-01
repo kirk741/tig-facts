@@ -1,6 +1,6 @@
 <template>
   <div class="logo">
-    <span class="logo__accent">Tig</span><span class="logo__base">Facts</span>
+    <RouterLink to="/"><span class="logo__accent">Tig</span><span class="logo__base">Facts</span></RouterLink>
   </div>
 </template>
 

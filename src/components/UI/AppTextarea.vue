@@ -1,15 +1,14 @@
 <template>
   <div class="textarea__container">
-    <textarea v-model="model" :type="type" :class="['textarea', `textarea--${variant}`]" :placeholder="placeholder" />
+    <textarea v-model="model" :class="['textarea', error ? 'textarea--invalid' : `textarea--${variant}`]"
+      :placeholder="placeholder" @input="$emit('update:modelValue', model)" />
     <span v-if="maxCount" class="textarea__count">{{ model?.length }} / {{ maxCount }}</span>
+    <span v-if="error" class="textarea__error">{{ error }}</span>
   </div>
-  <span v-if="error" class="textarea__error">{{ error }}</span>
 </template>
 
 <script setup>
-const model = defineModel({
-  default: ''
-});
+const model = defineModel();
 
 defineProps({
   type: {
@@ -53,7 +52,14 @@ defineProps({
   color: var(--color-text);
   font-size: var(--font-size-normal);
   width: 100%;
+  min-height: 100px;
   resize: vertical;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.textarea::-webkit-scrollbar {
+  display: none;
 }
 
 .textarea::placeholder {
@@ -69,8 +75,8 @@ defineProps({
   right: var(--gap-xl);
   bottom: 0;
   transform: translateY(30%);
-  padding: var(--gap-s);
-  background-color: var(--color-bg);
+  padding: 0 var(--gap-s);
+  background-color: var(--color-card);
   font-size: var(--font-size-small);
 }
 
@@ -79,8 +85,11 @@ defineProps({
 }
 
 .textarea__error {
+  position: absolute;
+  bottom: 5px;
+  left: var(--gap-xl);
+  transform: translateY(100%);
   color: var(--color-invalid);
   font-size: var(--font-size-small);
-  margin-left: var(--gap-xl);
 }
 </style>

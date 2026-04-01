@@ -1,16 +1,15 @@
 <template>
   <div class="input__container">
-    <input v-model="model" @input="handleInput" :type="currentType"
-      :class="['input', error ? 'input--invalid' : `input--${variant}`]" :placeholder="placeholder"
-      :required="required" />
-    <span v-if="maxCount" class="input__count">{{ model?.length }} / {{ maxCount }}</span>
+    <input v-model="model" :type="currentType" :class="['input', error ? 'input--invalid' : `input--${variant}`]"
+      :placeholder="placeholder" :required="required" @input="$emit('update:modelValue', model)" />
+    <span v-if="maxCount" class="input__count">{{ model?.trim().length }} / {{ maxCount }}</span>
 
     <span class="input__icon" v-if="type === 'password'">
       <IconEyeOpen v-if="currentType === 'password'" @click="currentType = 'text'" />
       <IconEyeHide v-else @click="currentType = 'password'" />
     </span>
+    <span v-if="error" class="input__error">{{ error }}</span>
   </div>
-  <span v-if="error" class="input__error">{{ error }}</span>
 </template>
 
 <script setup>
@@ -45,15 +44,6 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['update:error', 'typing']);
-
-const handleInput = () => {
-  if (props.error) {
-    emit('update:error', '');
-  }
-  emit('typing');
-};
-
 const currentType = ref(props.type);
 </script>
 
@@ -86,8 +76,8 @@ const currentType = ref(props.type);
   right: var(--gap-xl);
   bottom: 0;
   transform: translateY(50%);
-  padding: var(--gap-s);
-  background-color: var(--color-bg);
+  padding: 0 var(--gap-s);
+  background-color: var(--color-card);
   font-size: var(--font-size-small);
 }
 
@@ -96,9 +86,12 @@ const currentType = ref(props.type);
 }
 
 .input__error {
+  position: absolute;
+  bottom: 0;
+  left: var(--gap-xl);
+  transform: translateY(100%);
   color: var(--color-invalid);
   font-size: var(--font-size-small);
-  margin-left: var(--gap-xl);
 }
 
 .input__icon {
