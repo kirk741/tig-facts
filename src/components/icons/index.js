@@ -1,6 +1,8 @@
 import IconComment from "./IconComment.vue";
 import IconDelete from "./IconDelete.vue";
 import IconEdit from "./IconEdit.vue";
+import IconEyeHide from "./IconEyeHide.vue";
+import IconEyeOpen from "./IconEyeOpen.vue";
 import IconShow from "./IconShow.vue";
 
 export default [
@@ -8,4 +10,6 @@ export default [
   { name: 'IconDelete', component: IconDelete },
   { name: 'IconEdit', component: IconEdit },
   { name: 'IconShow', component: IconShow },
-]
+  { name: 'IconEyeOpen', component: IconEyeOpen },
+  { name: 'IconEyeHide', component: IconEyeHide },
+];

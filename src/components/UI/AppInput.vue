@@ -1,17 +1,24 @@
 <template>
   <div class="input__container">
-    <input v-model="model" :type="type" :class="['input', `input--${variant}`]" :placeholder="placeholder" />
+    <input v-model="model" @input="handleInput" :type="currentType"
+      :class="['input', error ? 'input--invalid' : `input--${variant}`]" :placeholder="placeholder"
+      :required="required" />
     <span v-if="maxCount" class="input__count">{{ model?.length }} / {{ maxCount }}</span>
+
+    <span class="input__icon" v-if="type === 'password'">
+      <IconEyeOpen v-if="currentType === 'password'" @click="currentType = 'text'" />
+      <IconEyeHide v-else @click="currentType = 'password'" />
+    </span>
   </div>
   <span v-if="error" class="input__error">{{ error }}</span>
 </template>
 
 <script setup>
-const model = defineModel({
-  default: ''
-});
+import { ref } from 'vue';
 
-defineProps({
+const model = defineModel();
+
+const props = defineProps({
   type: {
     type: String,
     default: 'text'
@@ -37,6 +44,17 @@ defineProps({
     default: 0
   }
 });
+
+const emit = defineEmits(['update:error', 'typing']);
+
+const handleInput = () => {
+  if (props.error) {
+    emit('update:error', '');
+  }
+  emit('typing');
+};
+
+const currentType = ref(props.type);
 </script>
 
 <style scoped>
@@ -81,5 +99,12 @@ defineProps({
   color: var(--color-invalid);
   font-size: var(--font-size-small);
   margin-left: var(--gap-xl);
+}
+
+.input__icon {
+  position: absolute;
+  right: var(--gap-m);
+  top: 15px;
+  cursor: pointer;
 }
 </style>
