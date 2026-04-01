@@ -8,8 +8,12 @@
       <slot name="card-content"></slot>
     </div>
 
-    <div v-if="$slots['card-footer']" class="card__footer">
+    <div class="card__footer">
       <slot name="card-footer"></slot>
+    </div>
+
+    <div class="card__action">
+      <slot name="card-action"></slot>
     </div>
   </div>
 </template>
@@ -53,9 +57,8 @@ defineProps({
   align-items: center;
   justify-content: space-between;
   gap: var(--gap-xl);
-  padding-bottom: var(--gap-m);
   font-size: var(--font-size-small);
-  padding: 0 var(--gap-m) var(--gap-m) var(--gap-xl);
+  padding: 0 var(--gap-xl) var(--gap-xxl) var(--gap-xl);
   min-height: 48px;
 }
 </style>
