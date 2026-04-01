@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div :class="['card', `card--${variant}`]">
     <div class="card__header">
       <slot name="card-header"></slot>
     </div>
@@ -8,7 +8,7 @@
       <slot name="card-content"></slot>
     </div>
 
-    <div class="card__footer">
+    <div v-if="$slots['card-footer']" class="card__footer">
       <slot name="card-footer"></slot>
     </div>
 
@@ -60,5 +60,23 @@ defineProps({
   font-size: var(--font-size-small);
   padding: 0 var(--gap-xl) var(--gap-xxl) var(--gap-xl);
   min-height: 48px;
+}
+
+.card__footer span {
+  text-wrap: nowrap;
+}
+
+.card__action {
+  padding: 0 var(--gap-m) var(--gap-m) var(--gap-m);
+}
+
+.card--hover {
+  transition: .2s;
+  cursor: pointer;
+  border: 1px transparent solid;
+}
+
+.card--hover:hover {
+  border: 1px var(--color-primary) solid;
 }
 </style>

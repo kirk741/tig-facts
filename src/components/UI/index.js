@@ -2,8 +2,10 @@ import AppButton from "./AppButton.vue";
 import AppButtonGroup from "./AppButtonGroup.vue";
 import AppCard from "./AppCard.vue";
 import AppForm from "./AppForm.vue";
+import AppInfoGroup from "./AppInfoGroup.vue";
 import AppInput from "./AppInput.vue";
 import AppLogo from "./AppLogo.vue";
+import AppSkeleton from "./AppSkeleton.vue";
 import AppTextarea from "./AppTextarea.vue";
 
 export default [
@@ -14,4 +16,6 @@ export default [
   { name: 'AppLogo', component: AppLogo },
   { name: 'AppForm', component: AppForm },
   { name: 'AppButtonGroup', component: AppButtonGroup },
+  { name: 'AppInfoGroup', component: AppInfoGroup },
+  { name: 'AppSkeleton', component: AppSkeleton },
 ]

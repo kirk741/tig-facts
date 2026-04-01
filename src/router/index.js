@@ -1,13 +1,24 @@
-import LoginView from '@/views/LoginView.vue'
-import MainView from '@/views/MainView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', component: MainView },
-    { path: '/login', component: LoginView },
-    { path: '/post/:id', component: LoginView },
+    {
+      path: '/',
+      component: () => import('@/views/MainView.vue')
+    },
+    {
+      path: '/login',
+      component: () => import('@/views/LoginView.vue')
+    },
+    {
+      path: '/post/:id',
+      component: () => import('@/views/PostView.vue')
+    },
+    {
+      path: '/blog/:id',
+      component: () => import('@/views/PostView.vue')
+    },
   ],
 })
 

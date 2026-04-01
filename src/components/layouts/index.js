@@ -1,11 +1,20 @@
-import AuthLayout from "./AuthLayout.vue";
-import MainLayout from "./MainLayout.vue";
-import MasonryGrid from "./MasonryGrid.vue";
-import SingleLayout from "./SingleLayout.vue";
+import { defineAsyncComponent } from 'vue';
 
 export default [
-  { name: 'AuthLayout', component: AuthLayout },
-  { name: 'MainLayout', component: MainLayout },
-  { name: 'SingleLayout', component: SingleLayout },
-  { name: 'MasonryGrid', component: MasonryGrid },
+  {
+    name: 'AuthLayout',
+    component: defineAsyncComponent(() => import("./AuthLayout.vue"))
+  },
+  {
+    name: 'MainLayout',
+    component: defineAsyncComponent(() => import("./MainLayout.vue"))
+  },
+  {
+    name: 'SingleLayout',
+    component: defineAsyncComponent(() => import("./SingleLayout.vue"))
+  },
+  {
+    name: 'MasonryGrid',
+    component: defineAsyncComponent(() => import("./MasonryGrid.vue"))
+  },
 ];

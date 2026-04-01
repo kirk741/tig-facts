@@ -1,56 +1,61 @@
 <template>
-  <div ref="gridElement" class="masonry">
+  <div ref="gridElement" class="masonry-container">
     <slot></slot>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, nextTick } from 'vue'
 import { RegularMasonryGrid } from '@masonry-grid/vanilla'
 
-const props = defineProps(['posts']);
-const gridElement = ref(null);
-let masonryInstance = null;
+const props = defineProps({
+  config: {
+    type: Array,
+    default: () => [3, 2, 1]
+  }
+});
 
-const initMasonry = () => {
+const gridElement = ref(null);
+
+const init = async () => {
+  await nextTick();
   if (gridElement.value) {
-    masonryInstance = new RegularMasonryGrid(gridElement.value);
+    new RegularMasonryGrid(gridElement.value);
   }
 }
-
-watch(() => props.posts, async () => {
-  await nextTick();
-  initMasonry();
-}, { deep: true });
-
-onMounted(() => {
-  initMasonry();
-});
+onMounted(init);
 </script>
 
 <style scoped>
-.masonry {
+.masonry-container {
   display: block;
-  gap: 10px;
-  column-gap: 10px;
-  column-count: 3;
+  width: 100%;
+  column-gap: 16px;
+  column-count: v-bind('props.config[0]');
 }
 
-@media (max-width: 769px) {
-  .masonry {
-    column-count: 2;
+@media (max-width: 1200px) {
+  .masonry-container {
+    column-count: v-bind('props.config[1]');
   }
 }
 
-@media (max-width: 415px) {
-  .masonry {
+@media (max-width: 930px) {
+  .masonry-container {
+    column-count: v-bind('props.config[2]');
+  }
+}
+
+@media (max-width: 420px) {
+  .masonry-container {
     column-count: 1;
   }
 }
 
-:deep(.card) {
+:deep(.card),
+:deep(> *) {
   break-inside: avoid;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
   display: inline-block;
   width: 100%;
 }
