@@ -31,5 +31,10 @@ export const apiFetch = async (endpoint, options = {}) => {
     throw error;
   }
 
-  return await response.json();
+  if (response.status === 204 || response.headers.get('content-length') === '0') {
+    return null;
+  }
+
+  const text = await response.text();
+  return text ? JSON.parse(text) : null;
 };

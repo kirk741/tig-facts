@@ -4,53 +4,74 @@
       <AppLogo />
     </template>
     <template #form-fields>
-      <AppInput v-model="username" v-model:error="usernameError" @typing="emit('typing')" :placeholder="'Введите логин'"
-        :required="true" :error="usernameError" />
-      <AppInput v-model="password" v-model:error="passwordError" @typing="emit('typing')"
-        :placeholder="'Введите пароль'" :type="'password'" :required="true" :error="passwordError" />
+      <AppInput v-model="form.username" @update:model-value="() => validateField('username')" :error="errors.username"
+        :placeholder="'Логин*'" :required="true"></AppInput>
+      <AppInput v-model="form.password" @update:model-value="() => validateField('password')" :error="errors.password"
+        :placeholder="'Пароль*'" :type="'password'" :required="true"></AppInput>
     </template>
     <template #form-action>
-      <AppButton @click="login" type="submit">Войти</AppButton>
+      <AppButton type="submit">Войти</AppButton>
     </template>
+    <template #form-error>{{ errors.form ? errors.form : '' }}</template>
   </AppForm>
 </template>
 
 <script setup>
+import { apiFetch } from '@/api/apiFetch';
+import router from '@/router';
 import { ref } from 'vue';
 
-const emit = defineEmits(['login', 'typing']);
+const form = ref({
+  username: '',
+  password: ''
+});
 
-const username = ref('');
-const password = ref('');
-const usernameError = ref('');
-const passwordError = ref('');
+const errors = ref({
+  username: '',
+  password: '',
+  form: ''
+});
 
-const login = () => {
-  validate();
+const validateField = (field) => {
+  const value = form.value[field].trim();
 
-  if (!usernameError.value && !passwordError.value) {
-    const userData = {
-      username: username.value.trim(),
-      password: password.value.trim()
-    };
-
-    emit('login', userData);
-  }
-}
-
-const validate = () => {
-  if (!username.value.trim()) {
-    usernameError.value = 'Обязательное поле'
-  } else {
-    usernameError.value = ''
+  if (!value) {
+    errors.value[field] = 'Обязательное поле';
+    return false;
   }
 
-  if (!password.value.trim()) {
-    passwordError.value = 'Обязательное поле'
-  } else {
-    passwordError.value = ''
+  errors.value[field] = '';
+  return true;
+};
+
+const validateForm = () => {
+  const fields = ['username', 'password'];
+  return fields.every(field => validateField(field));
+};
+
+const login = async () => {
+  errors.value.form = '';
+
+  if (!validateForm()) return;
+
+  try {
+    const params = new URLSearchParams({
+      username: form.value.username,
+      password: form.value.password
+    }).toString();
+
+    await apiFetch(`/login?${params}`, {
+      method: 'POST'
+    });
+
+    router.push('/');
+  } catch (err) {
+    console.error(err);
+    if (err.status === 422) {
+      errors.value.form = 'Неверный логин или пароль';
+    } else {
+      errors.value.form = 'Не удалось выполнить вход';
+    }
   }
-}
+};
 </script>
-
-<style scoped></style>
