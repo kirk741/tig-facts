@@ -111,7 +111,6 @@ const loadData = async () => {
     const id = route.params.id;
     const response = await apiFetch(`/post/${id}`);
     rawData.value = response;
-    console.log(response)
   } catch (error) {
     console.error('Ошибка загрузки:', error);
   } finally {
@@ -130,17 +129,6 @@ onMounted(loadData);
 <style>
 .card-action-container {
   width: 100%;
-}
-
-.form-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.sticky-btn {
-  position: sticky;
-  bottom: 20px;
-  z-index: 10;
 }
 
 .fixed-action-btn {

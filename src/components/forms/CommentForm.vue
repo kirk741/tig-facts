@@ -21,6 +21,7 @@
             </AppButton>
           </div>
         </template>
+        <template #form-error>{{ errors.form }}</template>
       </AppForm>
     </template>
   </AppCard>
@@ -30,7 +31,6 @@
 import { apiFetch } from '@/api/apiFetch';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import AppCard from '../UI/AppCard.vue';
 
 const route = useRoute();
 const postId = route.params.id;
@@ -45,7 +45,7 @@ const errors = ref({
   username: '',
   email: '',
   comment: '',
-  form: ''
+  form: '',
 });
 
 const maxCounts = {
@@ -80,7 +80,7 @@ const validateField = (field) => {
 };
 
 const validateForm = () => {
-  const fields = ['username', 'email', 'comment'];
+  const fields = Object.keys(form.value);
   return fields.every(field => validateField(field));
 }
 
@@ -117,5 +117,10 @@ const submitComment = async () => {
 .form {
   height: 100%;
   width: 100%;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

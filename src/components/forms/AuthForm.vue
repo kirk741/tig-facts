@@ -45,7 +45,7 @@ const validateField = (field) => {
 };
 
 const validateForm = () => {
-  const fields = ['username', 'password'];
+  const fields = Object.keys(form.value);
   return fields.every(field => validateField(field));
 };
 

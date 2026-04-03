@@ -29,10 +29,10 @@
             <span v-if="post.dateTime">{{ formatDate(post.dateTime) }}</span>
           </AppInfoGroup>
           <AppButtonGroup>
-            <AppButton :variant="'unbordered'" @click="router.push(`/post/${post.id}`)">
+            <AppButton :variant="'unbordered'">
               <IconShow />
             </AppButton>
-            <AppButtonTextBox @click.stop="router.push({ path: `/post/${post.id}`, query: { openComment: true } })">
+            <AppButtonTextBox @click.stop="router.push({ path: `/post/${post.id}` })">
               {{ post.comments.length === 0 ? '' : formatCount(post.comments.length) }}
               <AppButton :variant="'unbordered'">
                 <IconComment />
