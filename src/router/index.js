@@ -17,7 +17,7 @@ const router = createRouter({
     },
     {
       path: '/blog/:id',
-      component: () => import('@/views/PostView.vue')
+      component: () => import('@/views/MainView.vue')
     },
   ],
 })

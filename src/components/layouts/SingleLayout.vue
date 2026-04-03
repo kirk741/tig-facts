@@ -5,9 +5,11 @@
       <div class="form">
         <slot name="form"></slot>
       </div>
-      <MasonryGrid :config="[2, 2, 1]">
-        <slot name="cards"></slot>
-      </MasonryGrid>
+      <div class="cards">
+        <MasonryGrid :config="[2, 2, 1]">
+          <slot name="cards"></slot>
+        </MasonryGrid>
+      </div>
     </div>
   </div>
 </template>
@@ -23,11 +25,17 @@
 .content {
   display: flex;
   gap: var(--gap-m);
+  align-items: flex-start;
 }
 
 .form {
   width: 320px;
   flex-shrink: 0;
+}
+
+.cards {
+  flex-grow: 1;
+  width: 100%;
 }
 
 .logo {
@@ -41,6 +49,7 @@
 
   .content {
     flex-direction: column;
+    padding-bottom: var(--gap-xl);
   }
 }
 </style>

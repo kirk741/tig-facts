@@ -8,7 +8,9 @@
       <slot name="form-fields"></slot>
     </div>
 
-    <slot name="form-action"></slot>
+    <div class="form__action">
+      <slot name="form-action"></slot>
+    </div>
 
     <span class="form__error" v-if="$slots['form-error']">
       <slot name="form-error"></slot>

@@ -12,7 +12,7 @@
       <slot name="card-footer"></slot>
     </div>
 
-    <div class="card__action">
+    <div v-if="$slots['card-action']" class="card__action">
       <slot name="card-action"></slot>
     </div>
   </div>

@@ -32,11 +32,12 @@
             <AppButton :variant="'unbordered'" @click="router.push(`/post/${post.id}`)">
               <IconShow />
             </AppButton>
-            <AppButton :variant="'unbordered'"
-              @click.stop="router.push({ path: `/post/${post.id}`, query: { openComment: true } })">
-              {{ post.comments.length === 0 ? '' : post.comments.length }}
-              <IconComment />
-            </AppButton>
+            <AppButtonTextBox @click.stop="router.push({ path: `/post/${post.id}`, query: { openComment: true } })">
+              {{ post.comments.length === 0 ? '' : formatCount(post.comments.length) }}
+              <AppButton :variant="'unbordered'">
+                <IconComment />
+              </AppButton>
+            </AppButtonTextBox>
           </AppButtonGroup>
         </template>
       </AppCard>
@@ -47,6 +48,7 @@
 <script setup>
 import { apiFetch } from '@/api/apiFetch';
 import router from '@/router';
+import { formatCount } from '@/utils/formatCount';
 import { formatDate } from '@/utils/formatDate';
 import { computed, onMounted, ref } from 'vue';
 

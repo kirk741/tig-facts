@@ -1,5 +1,16 @@
-import LoginView from "./LoginView.vue";
+import { defineAsyncComponent } from 'vue';
 
 export default [
-  { name: 'LoginView', component: LoginView },
+  {
+    name: 'LoginView',
+    component: defineAsyncComponent(() => import("./LoginView.vue"))
+  },
+  {
+    name: 'MainView',
+    component: defineAsyncComponent(() => import("./MainView.vue"))
+  },
+  {
+    name: 'PostView',
+    component: defineAsyncComponent(() => import("./PostView.vue"))
+  },
 ]

@@ -1,5 +1,6 @@
-import AuthForm from "./AuthForm.vue";
+import { defineAsyncComponent } from "vue";
 
 export default [
-  { name: 'AuthForm', component: AuthForm }
+  { name: 'AuthForm', component: defineAsyncComponent(() => import("./AuthForm.vue")) },
+  { name: 'CommentForm', component: defineAsyncComponent(() => import("./CommentForm.vue")) }
 ]
