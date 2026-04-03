@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { apiFetch } from '@/api/apiFetch';
 
@@ -38,6 +38,13 @@ const route = useRoute();
 const userInfoId = route.params.id;
 
 const emit = defineEmits(['close', 'reloadData']);
+
+const props = defineProps({
+  initialData: {
+    type: Object,
+    default: null
+  }
+});
 
 const form = ref({
   briefDescription: '',
@@ -81,29 +88,45 @@ const validateForm = () => {
 }
 
 const submitPost = async () => {
-  errors.value.form = ''
+  errors.value.form = '';
   if (!validateForm()) return;
 
-  try {
-    await apiFetch(`/post?userInfoId=${userInfoId}`, {
-      method: 'POST',
-      body: {
-        briefDescription: form.value.briefDescription.trim(),
-        fullDescription: form.value.fullDescription.trim(),
-        title: form.value.title.trim()
-      }
-    });
+  const isEdit = !!props.initialData?.id;
+  const url = isEdit ? '/post' : `/post?userInfoId=${userInfoId}`;
+  const method = isEdit ? 'PUT' : 'POST';
 
-    form.value.title = '';
-    form.value.briefDescription = '';
-    form.value.fullDescription = '';
+  try {
+    const payload = {
+      title: form.value.title.trim(),
+      briefDescription: form.value.briefDescription.trim(),
+      fullDescription: form.value.fullDescription.trim(),
+    };
+
+    if (isEdit) {
+      payload.id = props.initialData.id;
+    }
+
+    await apiFetch(url, {
+      method: method,
+      body: payload
+    });
 
     emit('reloadData');
     emit('close');
   } catch (err) {
-    errors.value.form = 'Ошибка при создании поста';
+    errors.value.form = 'Ошибка при сохранении';
   }
-}
+};
+
+onMounted(() => {
+  if (props.initialData) {
+    form.value = {
+      title: props.initialData.title,
+      briefDescription: props.initialData.briefDescription,
+      fullDescription: props.initialData.fullDescription
+    };
+  }
+});
 </script>
 
 <style scoped>

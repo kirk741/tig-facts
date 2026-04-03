@@ -12,9 +12,5 @@ export default [
   {
     name: 'SingleLayout',
     component: defineAsyncComponent(() => import("./SingleLayout.vue"))
-  },
-  {
-    name: 'MasonryGrid',
-    component: defineAsyncComponent(() => import("./MasonryGrid.vue"))
-  },
+  }
 ];

@@ -16,8 +16,7 @@
     </template>
 
     <template v-else>
-      <AppCard :variant="'hover'" @click="router.push(`/post/${post.id}`)" v-for="post in formattedPosts"
-        :key="post.id">
+      <AppCard :variant="'hover'" @click="router.push(`/post/${post.id}`)" v-for="post in visiblePosts" :key="post.id">
         <template #card-content>
           <h3>{{ post.title }}</h3>
           <p>{{ post.briefDescription }}</p>
@@ -42,7 +41,9 @@
         </template>
       </AppCard>
     </template>
+    <AppSkeleton v-if="isLoadingMore" v-for="i in 3" :key="'loading-more-' + i" />
   </MainLayout>
+  <div ref="observerRef" class="observer"></div>
 </template>
 
 <script setup>
@@ -53,13 +54,15 @@ import { formatDate } from '@/utils/formatDate';
 import { computed, onMounted, ref } from 'vue';
 
 const isLoading = ref(false);
+const isLoadingMore = ref(false);
 const error = ref('');
 const rawData = ref([]);
+const visibleCount = ref(6);
+const observerRef = ref(null);
 
 const loadPosts = async () => {
   isLoading.value = true;
   try {
-    isLoading.value = true;
     const response = await apiFetch('/userInfo/findAll');
     rawData.value = response;
   } catch (err) {
@@ -83,10 +86,38 @@ const formattedPosts = computed(() => {
   ).sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
 });
 
-onMounted(() => {
-  loadPosts()
+const visiblePosts = computed(() => {
+  return formattedPosts.value.slice(0, visibleCount.value);
 });
 
+const loadMorePosts = () => {
+  if (visibleCount.value < formattedPosts.value.length) {
+    isLoadingMore.value = true;
+    setTimeout(() => {
+      visibleCount.value += 6;
+      isLoadingMore.value = false;
+    }, 1000); // Имитирую загрузку с сервера
+  }
+}
+
+onMounted(async () => {
+  await loadPosts();
+
+  const callback = (entries, observer) => {
+    if (entries[0].isIntersecting) {
+      loadMorePosts();
+    }
+  }
+
+  const options = {
+    rootMargin: "100px",
+    threshold: 1.0,
+  }
+
+  const observer = new IntersectionObserver(callback, options);
+
+  observer.observe(observerRef.value);
+});
 </script>
 
 <style scoped></style>

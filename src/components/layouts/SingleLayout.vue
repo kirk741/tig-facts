@@ -6,9 +6,9 @@
         <slot name="form"></slot>
       </div>
       <div class="cards">
-        <MasonryGrid :config="[2, 2, 1]">
+        <div class="grid">
           <slot name="cards"></slot>
-        </MasonryGrid>
+        </div>
       </div>
     </div>
   </div>
@@ -40,6 +40,12 @@
 
 .logo {
   margin-bottom: var(--gap-xl);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--gap-m);
 }
 
 @media (max-width: 660px) {

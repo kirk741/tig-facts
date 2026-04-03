@@ -13,7 +13,8 @@
             </AppButton>
           </Teleport>
           <AppModal v-if="isFormVisible" @close="isFormVisible = false">
-            <PostForm @reloadData="loadPosts" @close="isFormVisible = false" @cancel="isFormVisible = false" />
+            <PostForm @reloadData="loadPosts" @close="isFormVisible = false" @cancel="isFormVisible = false"
+              :initial-data="editingPost" />
           </AppModal>
         </template>
       </AppCard>
@@ -50,6 +51,9 @@
                   <IconComment />
                 </AppButton>
               </AppButtonTextBox>
+              <AppButton :variant="'unbordered'" @click.stop="handleEdit(post)">
+                <IconEdit />
+              </AppButton>
             </AppButtonGroup>
           </template>
           <template #card-content>
@@ -78,6 +82,7 @@ import { useRoute } from 'vue-router';
 const isLoading = ref(false);
 const rawData = ref([]);
 const isFormVisible = ref(false);
+const editingPost = ref(null);
 
 const route = useRoute();
 
@@ -112,6 +117,11 @@ const blogInfo = computed(() => {
 const handleDelete = async (id) => {
   await apiFetch(`/post/${id}`, { method: 'DELETE' });
   await loadPosts();
+}
+
+const handleEdit = (post) => {
+  editingPost.value = post;
+  isFormVisible.value = true;
 }
 
 onMounted(() => {

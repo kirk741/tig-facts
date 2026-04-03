@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <AppLogo class="logo" />
-    <MasonryGrid>
+    <div class="grid">
       <slot></slot>
-    </MasonryGrid>
+    </div>
   </div>
 </template>
 
@@ -17,5 +17,11 @@
 
 .logo {
   margin-bottom: var(--gap-xl);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--gap-m);
 }
 </style>
