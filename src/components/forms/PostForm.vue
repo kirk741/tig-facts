@@ -13,17 +13,19 @@
             :error="errors.fullDescription" :maxCount="maxCounts.fullDescription"
             @update:modelValue="() => validateField('fullDescription')" />
         </template>
+
         <template #form-action>
-          <div class="form-buttons">
-            <AppButton type="button" variant="unbordered" @click="$emit('close')">
-              Отмена
-            </AppButton>
-            <AppButton type="submit">
-              Отправить
-            </AppButton>
-          </div>
+          <AppButton type="button" variant="unbordered" @click="$emit('close')">
+            Отмена
+          </AppButton>
+          <AppButton type="submit">
+            Отправить
+          </AppButton>
         </template>
-        <template #form-error>{{ errors.form }}</template>
+
+        <template #form-error>
+          {{ errors.form }}
+        </template>
       </AppForm>
     </template>
   </AppCard>
@@ -128,10 +130,3 @@ onMounted(() => {
   }
 });
 </script>
-
-<style scoped>
-.form-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-</style>

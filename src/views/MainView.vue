@@ -21,6 +21,7 @@
           <h3>{{ post.title }}</h3>
           <p>{{ post.briefDescription }}</p>
         </template>
+
         <template #card-footer>
           <AppInfoGroup>
             <RouterLink :to="`/blog/${post.blogId}`" @click.stop><span v-if="post.fullName">{{ post.fullName }}</span>
@@ -43,6 +44,7 @@
     </template>
     <AppSkeleton v-if="isLoadingMore" v-for="i in 3" :key="'loading-more-' + i" />
   </MainLayout>
+
   <div ref="observerRef" class="observer"></div>
 </template>
 
@@ -51,7 +53,7 @@ import { apiFetch } from '@/api/apiFetch';
 import router from '@/router';
 import { formatCount } from '@/utils/formatCount';
 import { formatDate } from '@/utils/formatDate';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 
 const isLoading = ref(false);
 const isLoadingMore = ref(false);
@@ -59,6 +61,7 @@ const error = ref('');
 const rawData = ref([]);
 const visibleCount = ref(6);
 const observerRef = ref(null);
+const observer = ref(null);
 
 const loadPosts = async () => {
   isLoading.value = true;
@@ -103,7 +106,7 @@ const loadMorePosts = () => {
 onMounted(async () => {
   await loadPosts();
 
-  const callback = (entries, observer) => {
+  const callback = (entries) => {
     if (entries[0].isIntersecting) {
       loadMorePosts();
     }
@@ -114,10 +117,14 @@ onMounted(async () => {
     threshold: 1.0,
   }
 
-  const observer = new IntersectionObserver(callback, options);
+  observer.value = new IntersectionObserver(callback, options);
 
-  observer.observe(observerRef.value);
+  observer.value.observe(observerRef.value);
+});
+
+onUnmounted(() => {
+  if (observer.value) {
+    observer.value.disconnect();
+  }
 });
 </script>
-
-<style scoped></style>

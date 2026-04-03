@@ -7,7 +7,17 @@
 </template>
 
 <script setup>
+import { onMounted, onUnmounted } from 'vue';
+
 const emit = defineEmits(['close']);
+
+onMounted(() => {
+  document.body.style.overflow = 'hidden';
+});
+
+onUnmounted(() => {
+  document.body.style.overflow = '';
+});
 </script>
 
 <style scoped>

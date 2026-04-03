@@ -16,7 +16,7 @@
         </template>
         <template #card-action>
           <Teleport to="body">
-            <AppButton v-if="!isFormVisible" @click="isFormVisible = true" class="fixed-action-btn">
+            <AppButton v-if="!isFormVisible" @click="isFormVisible = true" class="fixed-action-button">
               Оставить комментарий
             </AppButton>
           </Teleport>
@@ -29,7 +29,7 @@
 
     <template #cards>
       <template v-if="isDataLoading">
-        <AppSkeleton v-for="i in 4" :key="'skeleton-' + i" />
+        <AppSkeleton v-for="i in 3" :key="'skeleton-' + i" />
       </template>
 
       <template v-else-if="!comments.length">
@@ -131,7 +131,7 @@ onMounted(loadData);
   width: 100%;
 }
 
-.fixed-action-btn {
+.fixed-action-button {
   position: fixed;
   bottom: 20px;
   left: var(--gap-xl);
@@ -143,7 +143,7 @@ onMounted(loadData);
 }
 
 @media(max-width: 660px) {
-  .fixed-action-btn {
+  .fixed-action-button {
     max-width: calc(100% - 48px);
   }
 }

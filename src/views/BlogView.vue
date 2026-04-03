@@ -6,9 +6,10 @@
           <h3>{{ blogInfo.blogName }}</h3>
           <p>Владелец: {{ blogInfo.fullName }}</p>
         </template>
+
         <template #card-action>
           <Teleport to="body">
-            <AppButton v-if="!isFormVisible" @click="isFormVisible = true" class="fixed-action-btn">
+            <AppButton v-if="!isFormVisible" @click="isFormVisible = true" class="fixed-action-button">
               Добавить пост
             </AppButton>
           </Teleport>
@@ -24,6 +25,7 @@
       <template v-if="isLoading">
         <AppSkeleton v-for="i in 6" :key="'skeleton-' + i" />
       </template>
+
       <template v-else-if="!currentFormattedPosts.length">
         <AppCard>
           <template #card-content>
@@ -34,6 +36,7 @@
           </template>
         </AppCard>
       </template>
+
       <template v-else>
         <AppCard :variant="'hover'" @click="router.push(`/post/${post.id}`)" v-for="post in currentFormattedPosts"
           :key="post.id">
@@ -56,10 +59,12 @@
               </AppButton>
             </AppButtonGroup>
           </template>
+
           <template #card-content>
             <h3>{{ post.title }}</h3>
             <p>{{ post.briefDescription }}</p>
           </template>
+
           <template #card-footer>
             <AppInfoGroup>
               <span v-if="post.dateTime">{{ formatDate(post.dateTime) }}</span>
@@ -75,6 +80,7 @@
 import { apiFetch } from '@/api/apiFetch';
 import PostForm from '@/components/forms/PostForm.vue';
 import router from '@/router';
+import { formatCount } from '@/utils/formatCount';
 import { formatDate } from '@/utils/formatDate';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -124,13 +130,11 @@ const handleEdit = (post) => {
   isFormVisible.value = true;
 }
 
-onMounted(() => {
-  loadPosts();
-});
+onMounted(loadPosts);
 </script>
 
 <style scoped>
-.fixed-action-btn {
+.fixed-action-button {
   position: fixed;
   bottom: 20px;
   left: var(--gap-xl);
@@ -142,7 +146,7 @@ onMounted(() => {
 }
 
 @media(max-width: 660px) {
-  .fixed-action-btn {
+  .fixed-action-button {
     max-width: calc(100% - 48px);
   }
 }

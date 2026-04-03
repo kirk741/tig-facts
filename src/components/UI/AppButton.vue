@@ -35,15 +35,6 @@ defineProps({
   border: 1px solid var(--color-primary);
 }
 
-.button--muted {
-  background-color: var(--color-muted);
-}
-
-.button--muted:hover {
-  background-color: var(--color-muted);
-  border: 1px solid transparent;
-}
-
 .button--unbordered {
   background-color: transparent;
   border: none;

@@ -1,6 +1,5 @@
 <template>
-  <div class="skeleton__card">
-  </div>
+  <div class="skeleton__card"></div>
 </template>
 
 <style scoped>

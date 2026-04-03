@@ -1,10 +1,12 @@
 <template>
   <div class="container">
     <AppLogo class="logo" />
+
     <div class="content">
       <div class="form">
         <slot name="form"></slot>
       </div>
+
       <div class="cards">
         <div class="grid">
           <slot name="cards"></slot>
@@ -13,9 +15,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-</script>
 
 <style scoped>
 .container {

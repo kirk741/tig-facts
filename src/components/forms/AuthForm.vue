@@ -3,16 +3,21 @@
     <template #form-header>
       <AppLogo />
     </template>
+
     <template #form-fields>
-      <AppInput v-model="form.username" @update:model-value="() => validateField('username')" :error="errors.username"
-        :placeholder="'Логин*'" :required="true"></AppInput>
-      <AppInput v-model="form.password" @update:model-value="() => validateField('password')" :error="errors.password"
-        :placeholder="'Пароль*'" :type="'password'" :required="true"></AppInput>
+      <AppInput v-model="form.username" :error="errors.username" placeholder="'Логин*'" required="true"
+        @update:model-value="() => validateField('username')" />
+      <AppInput v-model="form.password" :error="errors.password" placeholder="'Пароль*'" type="'password'"
+        :required="true" @update:model-value="() => validateField('password')" />
     </template>
+
     <template #form-action>
       <AppButton type="submit">Войти</AppButton>
     </template>
-    <template #form-error>{{ errors.form ? errors.form : '' }}</template>
+
+    <template #form-error>
+      {{ errors.form ? errors.form : '' }}
+    </template>
   </AppForm>
 </template>
 

@@ -1,20 +1,16 @@
 <template>
-  <div class="btn-group">
+  <div class="button-group">
     <slot></slot>
   </div>
 </template>
 
-<script setup>
-
-</script>
-
 <style scoped>
-.btn-group {
+.button-group {
   display: flex;
   gap: 0;
 }
 
-.btn-group :deep(button) {
+.button-group :deep(button) {
   display: flex;
   align-items: center;
   justify-content: center;

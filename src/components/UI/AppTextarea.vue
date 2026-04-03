@@ -2,7 +2,9 @@
   <div class="textarea__container">
     <textarea v-model="model" :class="['textarea', error ? 'textarea--invalid' : `textarea--${variant}`]"
       :placeholder="placeholder" @input="$emit('update:modelValue', model)" />
+
     <span v-if="maxCount" class="textarea__count">{{ model?.length }} / {{ maxCount }}</span>
+
     <span v-if="error" class="textarea__error">{{ error }}</span>
   </div>
 </template>

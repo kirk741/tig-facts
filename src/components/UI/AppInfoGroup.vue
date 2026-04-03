@@ -1,34 +1,17 @@
 <template>
-  <div class="post__meta">
+  <div class="post__info">
     <slot></slot>
   </div>
 </template>
 
-<script setup>
-defineProps({
-  fullName: {
-    type: String,
-    default: ''
-  },
-  blogName: {
-    type: String,
-    default: ''
-  },
-  dateTime: {
-    type: String,
-    default: ''
-  },
-});
-</script>
-
 <style scoped>
-.post__meta {
+.post__info {
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap-s);
 }
 
-.post__meta :deep(span) {
+.post__info :deep(span) {
   text-wrap: nowrap;
 }
 </style>

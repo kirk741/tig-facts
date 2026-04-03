@@ -55,4 +55,10 @@ defineProps({
 .form__error {
   color: var(--color-invalid);
 }
+
+.form__action {
+  display: flex;
+  gap: var(--gap-m);
+  width: 100%;
+}
 </style>

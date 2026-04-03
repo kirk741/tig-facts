@@ -7,9 +7,6 @@
   </div>
 </template>
 
-<script setup>
-</script>
-
 <style>
 .container {
   padding: var(--gap-xl);

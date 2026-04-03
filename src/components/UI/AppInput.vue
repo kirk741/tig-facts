@@ -1,13 +1,15 @@
 <template>
-  <div class="input__container">
+  <div class="input-container">
     <input v-model="model" :type="currentType" :class="['input', error ? 'input--invalid' : `input--${variant}`]"
-      :placeholder="placeholder" :required="required" @input="$emit('update:modelValue', model)" />
+      :placeholder="placeholder" :required="required" />
+
     <span v-if="maxCount" class="input__count">{{ model?.trim().length }} / {{ maxCount }}</span>
 
     <span class="input__icon" v-if="type === 'password'">
       <IconEyeOpen v-if="currentType === 'password'" @click="currentType = 'text'" />
       <IconEyeHide v-else @click="currentType = 'password'" />
     </span>
+
     <span v-if="error" class="input__error">{{ error }}</span>
   </div>
 </template>
@@ -48,7 +50,7 @@ const currentType = ref(props.type);
 </script>
 
 <style scoped>
-.input__container {
+.input-container {
   position: relative;
 }
 

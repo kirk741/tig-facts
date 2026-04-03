@@ -11,17 +11,19 @@
           <AppTextarea v-model="form.comment" placeholder="Что вас больше всего впечатлило?*" :error="errors.comment"
             :maxCount="maxCounts.comment" @update:modelValue="() => validateField('comment')" />
         </template>
+
         <template #form-action>
-          <div class="form-buttons">
-            <AppButton type="button" variant="unbordered" @click="$emit('cancel')">
-              Отмена
-            </AppButton>
-            <AppButton type="submit">
-              Отправить
-            </AppButton>
-          </div>
+          <AppButton type="button" variant="unbordered" @click="$emit('cancel')">
+            Отмена
+          </AppButton>
+          <AppButton type="submit">
+            Отправить
+          </AppButton>
         </template>
-        <template #form-error>{{ errors.form }}</template>
+
+        <template #form-error>
+          {{ errors.form }}
+        </template>
       </AppForm>
     </template>
   </AppCard>
@@ -34,6 +36,7 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const postId = route.params.id;
+const emit = defineEmits(['reloadData', 'closeForm']);
 
 const form = ref({
   username: '',
@@ -84,7 +87,6 @@ const validateForm = () => {
   return fields.every(field => validateField(field));
 }
 
-const emit = defineEmits(['reloadData', 'closeForm']);
 
 const submitComment = async () => {
   errors.value.form = '';
@@ -112,15 +114,3 @@ const submitComment = async () => {
   }
 }
 </script>
-
-<style scoped>
-.form {
-  height: 100%;
-  width: 100%;
-}
-
-.form-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-</style>
