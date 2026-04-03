@@ -18,7 +18,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(max(280px, calc(33% - var(--gap-m))), 1fr));
   gap: var(--gap-m);
+  width: 100%;
 }
 </style>

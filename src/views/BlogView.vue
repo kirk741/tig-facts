@@ -107,7 +107,7 @@ const loadPosts = async () => {
 const currentFormattedPosts = computed(() => {
   const id = route.params.id;
   const blog = rawData.value.find(b => b.id == id);
-  return blog ? blog.post : [];
+  return blog ? blog.post.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime)) : [];
 });
 
 const blogInfo = computed(() => {

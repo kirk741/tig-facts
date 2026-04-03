@@ -17,17 +17,7 @@
 
     <template v-else>
       <AppCard :variant="'hover'" @click="router.push(`/post/${post.id}`)" v-for="post in visiblePosts" :key="post.id">
-        <template #card-content>
-          <h3>{{ post.title }}</h3>
-          <p>{{ post.briefDescription }}</p>
-        </template>
-
-        <template #card-footer>
-          <AppInfoGroup>
-            <RouterLink :to="`/blog/${post.blogId}`" @click.stop><span v-if="post.fullName">{{ post.fullName }}</span>
-            </RouterLink>
-            <span v-if="post.dateTime">{{ formatDate(post.dateTime) }}</span>
-          </AppInfoGroup>
+        <template #card-header>
           <AppButtonGroup>
             <AppButton :variant="'unbordered'">
               <IconShow />
@@ -39,6 +29,19 @@
               </AppButton>
             </AppButtonTextBox>
           </AppButtonGroup>
+        </template>
+
+        <template #card-content>
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.briefDescription }}</p>
+        </template>
+
+        <template #card-footer>
+          <AppInfoGroup>
+            <RouterLink :to="`/blog/${post.blogId}`" @click.stop><span v-if="post.fullName">{{ post.fullName }}</span>
+            </RouterLink>
+            <span v-if="post.dateTime">{{ formatDate(post.dateTime) }}</span>
+          </AppInfoGroup>
         </template>
       </AppCard>
     </template>

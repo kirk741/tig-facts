@@ -54,7 +54,7 @@
 
   .content {
     flex-direction: column;
-    padding-bottom: var(--gap-xl);
+    padding-bottom: var(--gap-xxxl);
   }
 }
 </style>
